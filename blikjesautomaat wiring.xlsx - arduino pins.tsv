@@ -1,0 +1,76 @@
+pin number	pinname	connection	in/out	pull up?	connected
+13	pwm-13				
+12	pwm-12				
+11	pw-11	Rs lcd	0	n	n
+10	pw-10	lcd1 backlight	o	n	Y
+9	pwm-9	lcd2 backlight	o	n	Y
+8	pwm-8	lcd3 backlight	o	n	Y
+7	pwm-7	lcd4 backlight	o	n	Y
+6	pwm-6	lcd5 backlight	o	n	Y
+5	pwm-5	lcd6 backlight	o	n	Y
+4	pwm-4	rood led mond	O	N	Y
+3	pwm-3	groen led mond	O	N	Y
+2	pwm-2	blauw led mond	O	N	Y
+1	tx-0	reserved for debuggin	o		n
+0	rx-0	reserved for debuggin	i		n
+14	tx-3	toekomst(raspberry pi voor data ?)	o		n
+15	rx-3	toekomst(raspberry pi voor data ?)	i		n
+16	tx-2	aansturing 5x7 seg display met mini pro?	o		n
+17	rx-2		i		n
+18	tx-1	geldteller	o		n
+19	rx-1	geldteller	i		n
+20	SDA				n
+21	SCL				n
+22		motor 1	o	N	Y
+23		motor 2	o	N	Y
+24		motor 3	o	N	Y
+25		motor 4	o	N	Y
+26		motor 5	o	N	Y
+27		motor 6	o	N	Y
+28		Eind 1	i	Y	Y
+29		Eind 2	i	y	Y
+30		Eind 3	i	y	Y
+31		Eind 4 	i	y	Y
+32		Eind 5 	i	y	Y
+33		Eind 6 	i	y	Y
+34		Leeg 1	i	y	Y
+35		Leeg 2	i	y	Y
+36		Leeg 3	i	y	Y
+37		Leeg 4	i	y	Y
+38		Leeg 5	i	y	Y
+39		Leeg 6	i	y	Y
+40		vend 1	i	y	n
+41		Vend 2	i	y	n
+42		Vend 3	i	y	n
+43		Vend 4	i	y	n
+44	pwm	Lcd data 1		n	n
+45	pwm	Lcd data 2		n	n
+46	pwm	lcd data 3		n	n
+47		Vend 5 		y	n
+48		vend 6		y	n
+49		lcd data 4		n	n
+50	miso	miso rfid			n
+51	mosi	mosi rfid 			n
+52	sck	sck rfid			n
+53	ss	ss rfid			n
+A0		thermistor koeling machine			
+A1					
+A2					
+A3					
+A4					
+A5					
+A6					
+A7					
+A8		led 1 (no change)	o	n	n
+A9		led 2 (dunno)	o	n	n
+A10		enable lcd 1	o	n	n
+A11		enable lcd 2	o	n	n
+A12		enable lcd 3	o	n	n
+A13		enable lcd 4	o	n	n
+A14		enable lcd 5	o	n	n
+A15		enabale lcd 6	o	n	n
+					
+					
+reset 	reset rfid				
+5v 					
+ground					
