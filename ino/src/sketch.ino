@@ -16,6 +16,7 @@ int error_code = 0;
 long error_time = 0;
 long endstop_debounce = 0;
 
+long motor_burn_out_safety_time = 0;
 long debug_last_millis = 0;
 
 int mouth_fader = 0;
@@ -37,6 +38,7 @@ void setup() {
 		pinMode(pin_motor[i], OUTPUT);
 		pinMode(pin_lcd_backlight[i], OUTPUT);
 		digitalWrite(pin_motor[i], HIGH);
+		digitalWrite(pin_lcd_backlight[i], LOW);
 	}
 
 	// LED self-test
@@ -66,7 +68,33 @@ void setup() {
 	Serial.begin(115200);
 }
 
+// see http://www.instructables.com/id/two-ways-to-reset-arduino-in-software/step2/using-just-software/
+void(* resetFunc) (void) = 0; //declare reset function @ address 0
+
 void loop() {
+	// safety check, prevent motors from burning out (does actually happen!)
+	if(motor_burn_out_safety_time + 5000 < millis() && status_code != 0) {
+		for(int i = 0; i < 6; i++) {
+			digitalWrite(pin_motor[i], HIGH);
+		}
+		status_code = 0;
+		digitalWrite(pin_mouth_red, HIGH);
+		digitalWrite(pin_mouth_green, LOW);
+		digitalWrite(pin_mouth_blue, LOW);
+		for(int i = 0; i<10; i++) {
+			for(int j = 0; j < 6; j++) {
+				digitalWrite(pin_lcd_backlight[j], LOW);
+			}
+			delay(500);
+			for(int j = 0; j < 6; j++) {
+				digitalWrite(pin_lcd_backlight[j], HIGH);
+			}
+			delay(500);
+		}
+		setup();
+	}
+
+
 	// fade the mouth between blue and green
 	if(mouth_fader_last_millis + 10 < millis()) {
 		mouth_fader += mouth_fader_direction;
@@ -97,12 +125,12 @@ void loop() {
 		// also when there's any error
 		else if(error_code > 0) {
 			mouth_activity_red++;
-			if(mouth_activity_red < 20) {
+			if(mouth_activity_red < 10) {
 				red = 255;
 				green = 0;
 				blue = 0;
 			}
-			if(mouth_activity_red > 40) {
+			if(mouth_activity_red > 20) {
 				mouth_activity_red = 0;
 			}
 			if(error_time + 2000 < millis()) {
@@ -125,6 +153,7 @@ void loop() {
 				} else {
 					status_code = 1;
 					status_number = i;
+					motor_burn_out_safety_time = millis();
 					digitalWrite(pin_motor[i], LOW);
 				}
 			}
@@ -158,7 +187,7 @@ void loop() {
 		} else if(digitalRead(pin_empty[i]) == LOW) {
 			analogWrite(pin_lcd_backlight[i], 128);
 		} else {
-			analogWrite(pin_lcd_backlight[i], 10);
+			analogWrite(pin_lcd_backlight[i], 64);
 		}
 	}
 
